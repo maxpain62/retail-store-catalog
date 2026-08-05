@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: retail-store-catalog-deployment
+  labels:
+    app: retail-store-catalog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: retail-store-catalog
+  template:
+    metadata:
+      labels:
+        app: retail-store-catalog
+    spec:
+      containers:
+        - name: retail-store-catalog-container
+          image: 134448505602.dkr.ecr.ap-south-1.amazonaws.com/retail-store-catalog:latest
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 5     
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 5          
+          ports:
+            - containerPort: 8080
+              protocol: TCP
