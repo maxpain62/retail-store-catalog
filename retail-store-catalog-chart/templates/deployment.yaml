@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: {{ .Values.metadata.labels.app }}-container
-          image: {{ .Values.image.repository }}/{{ .Values.metadata.labels.app }}:{{ .Values.image.tag }}
+          image: {{ .Values.containers.image }}:{{ .Values.containers.imagetag }}
           resources:
             requests:
               cpu: "100m"
