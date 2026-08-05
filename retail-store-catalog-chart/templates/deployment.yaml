@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.metadata.labels.app }}-deployment
+  labels:
+    app: {{ .Values.metadata.labels.app }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.metadata.labels.app }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.metadata.labels.app }}
+    spec:
+      containers:
+        - name: {{ .Values.metadata.labels.app }}-container
+          image: {{ .Values.image.repository }}/{{ .Values.metadata.labels.app }}:{{ .Values.image.tag }}
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.containers.ports.containerPort }}
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 5     
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.containers.ports.containerPort }}
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 5          
+          ports:
+            - containerPort: {{ .Values.containers.ports.containerPort }}
+              protocol: TCP

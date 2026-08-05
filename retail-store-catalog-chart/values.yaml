@@ -1,0 +1,11 @@
+metadata:
+  labels:
+    app: retail-store-catalog
+
+containers:
+  ports:
+    containerPort: 5050
+
+image:
+  reposirory: 134448505602.dkr.ecr.ap-south-1.amazonaws.com
+  tag: latest
