@@ -11,3 +11,19 @@ spec:
     - port: {{ .Values.containers.ports.containerPort }}
       targetPort: {{ .Values.containers.ports.containerPort }}
   type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.metadata.labels.app }}-mysql-service
+  labels:
+    app: {{ .Values.metadata.labels.app }}-mysql
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3306
+      targetPort: mysql
+      protocol: TCP
+      name: mysql
+  selector:
+    app: {{ .Values.metadata.labels.app }}-mysql

@@ -17,6 +17,11 @@ spec:
       containers:
         - name: {{ .Values.metadata.labels.app }}-container
           image: {{ .Values.containers.image }}:{{ .Values.containers.imagetag }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.metadata.labels.app }}-configmap
+            - secretRef:
+                namd: {{ .Values.metadata.labels.app }}-db-secret
           resources:
             requests:
               cpu: "100m"
@@ -41,3 +46,50 @@ spec:
           ports:
             - containerPort: {{ .Values.containers.ports.containerPort }}
               protocol: TCP
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.metadata.labels.app }}-mysql-statefulset
+  labels:
+    app: {{ .Values.metadata.labels.app }}-mysql
+spec:
+  replicas: 1
+  serviceName: {{ .Values.metadata.labels.app }}-mysql-service
+  selector:
+    matchLabels:
+      app: {{ .Values.metadata.labels.app }}-mysql
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.metadata.labels.app }}-mysql
+    spec:
+      containers:
+        - name: {{ .Values.metadata.labels.app }}-mysql-container
+          image: "public.ecr.aws/docker/library/mysql:8.0"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: my-secret-pw
+            - name: MYSQL_DATABASE
+              value: catalog
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.metadata.labels.app }}-db-secret
+                  key: RETAIL_CATALOG_PERSISTENCE_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.metadata.labels.app }}-db-secret
+                  key: RETAIL_CATALOG_PERSISTENCE_PASSWORD
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+          ports:
+            - name: mysql
+              containerPort: 3306
+              protocol: TCP
+      volumes:
+      - name: data
+        emptyDir: {}
