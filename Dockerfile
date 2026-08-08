@@ -56,7 +56,7 @@
 #
 #ENTRYPOINT ["/app/main"]
 
-FROM gcr.io/distroless/static
+FROM ubuntu/go:1.26-26.04_edge
 WORKDIR /app
 COPY ./main .
 EXPOSE 5050
