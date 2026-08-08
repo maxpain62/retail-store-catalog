@@ -57,7 +57,7 @@
 #ENTRYPOINT ["/app/main"]
 
 FROM gcr.io/distroless/static
-WORKDIR /src
-COPY ./main ./main
+WORKDIR /app
+COPY ./main ./
 EXPOSE 5050
-ENTRYPOINT ["/src/main"]
+ENTRYPOINT ["/app/main"]
