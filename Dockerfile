@@ -56,7 +56,7 @@
 #
 #ENTRYPOINT ["/app/main"]
 
-FROM golang:tip-bookworm
+FROM 134448505602.dkr.ecr.ap-south-1.amazonaws.com/debug:ubuntu-go-test
 WORKDIR /app
 COPY ./main .
 EXPOSE 5050
