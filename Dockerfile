@@ -58,6 +58,8 @@
 
 FROM 134448505602.dkr.ecr.ap-south-1.amazonaws.com/debug:ubuntu-go-test
 WORKDIR /app
+RUN ls -l / && ls -l /app
 COPY ./main .
+RUN ls -l /app
 EXPOSE 5050
 ENTRYPOINT ["./main"]
