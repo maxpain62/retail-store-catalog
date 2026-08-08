@@ -56,7 +56,7 @@
 #
 #ENTRYPOINT ["/app/main"]
 
-FROM ubuntu/go:1.26-26.04_edge
+FROM golang:tip-bookworm
 WORKDIR /app
 COPY ./main .
 EXPOSE 5050
