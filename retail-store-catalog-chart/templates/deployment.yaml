@@ -21,7 +21,7 @@ spec:
             - configMapRef:
                 name: {{ .Values.metadata.labels.app }}-configmap
             - secretRef:
-                namd: {{ .Values.metadata.labels.app }}-db-secret
+                name: {{ .Values.metadata.labels.app }}-db-secret
           resources:
             requests:
               cpu: "100m"
