@@ -56,10 +56,12 @@
 #
 #ENTRYPOINT ["/app/main"]
 
-FROM 134448505602.dkr.ecr.ap-south-1.amazonaws.com/debug:ubuntu-go-test
+FROM gcr.io/distroless/static
+
 WORKDIR /app
-RUN ls -l / && ls -l /app
-COPY ./main .
-RUN ls -l /app
+
+COPY ./main /app/main
+
 EXPOSE 5050
-ENTRYPOINT ["./main"]
+
+ENTRYPOINT ["/app/main"]
