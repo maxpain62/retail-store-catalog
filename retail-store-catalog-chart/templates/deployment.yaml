@@ -33,14 +33,14 @@ spec:
             httpGet:
               path: /health
               port: {{ .Values.containers.ports.containerPort }}
-            initialDelaySeconds: 60
+            initialDelaySeconds: 90
             periodSeconds: 10
             failureThreshold: 5     
           readinessProbe:
             httpGet:
               path: /health
               port: {{ .Values.containers.ports.containerPort }}
-            initialDelaySeconds: 60
+            initialDelaySeconds: 90
             periodSeconds: 10
             failureThreshold: 5          
           ports:
