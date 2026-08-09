@@ -10,7 +10,7 @@ spec:
   ports:
     - port: {{ .Values.containers.ports.containerPort }}
       targetPort: {{ .Values.containers.ports.containerPort }}
-  type: NodePort
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
