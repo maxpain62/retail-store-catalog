@@ -8,6 +8,8 @@ podTemplate(yaml: readTrusted('pod.yaml')) {
                 sh '''
                 go mod download
                 CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o main main.go
+                file main
+                ldd main
                 '''
             }
         }
