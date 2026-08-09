@@ -60,10 +60,6 @@ FROM gcr.io/distroless/static
 
 WORKDIR /app
 
-RUN ls -l && pwd
-
 COPY ./main /app/main
-
-EXPOSE 5050
 
 ENTRYPOINT ["/app/main"]
